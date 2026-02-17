@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: compile
+        run: | 
+          echo "Compiling"
+          sleep 10
       - name: register-build-artifact
         id: register_artifact
         uses: cloudbees-io-gha/register-build-artifact@v3
