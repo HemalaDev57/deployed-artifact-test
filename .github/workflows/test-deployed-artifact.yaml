@@ -14,7 +14,7 @@ jobs:
       - name: compile
         run: | 
           echo "Compiling"
-          sleep 10
+          sleep 20
       - name: register-build-artifact
         id: register_artifact
         uses: cloudbees-io-gha/register-build-artifact@v3
