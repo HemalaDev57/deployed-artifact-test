@@ -20,7 +20,7 @@ jobs:
       - name: compile and build
         run: | 
           echo "Compiling"
-          sleep 30
+          sleep 5
       - name: register-build-artifact
         id: register_artifact
         uses: cloudbees-io-gha/register-build-artifact@v3
@@ -39,7 +39,8 @@ jobs:
       - name: register-deployed-artifact
         uses: ./private-repo
         with: 
-          artifact_id: '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
-          target_environment: Production
+          cloudbees-url: "https://api.saas-preprod.beescloud.com"
+          artifact-id: '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
+          target-environment: Production
           label: staging,qa,prod
           
