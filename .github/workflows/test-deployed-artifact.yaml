@@ -29,6 +29,11 @@ jobs:
           digest: "sha256:1234567890abcdef123456123456abcdefabcdef123456"
       - name: Print artifact id
         run: |
-          echo '${{ toJson(steps.register_artifact.outputs) }}'
-      # - name: register-deployed-artifact
-      #   uses: HemalaDev57/register-deployed-artifact-test@master
+          echo '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
+      - name: register-deployed-artifact
+        uses: HemalaDev57/register-deployed-artifact-test@master
+        with: 
+          artifact_id: '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
+          target_environment: Production
+          label: staging,qa,prod
+          
