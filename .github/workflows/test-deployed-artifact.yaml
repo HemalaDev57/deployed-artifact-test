@@ -42,5 +42,5 @@ jobs:
           cloudbees-url: "https://api.saas-preprod.beescloud.com"
           artifact-id: '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
           target-environment: Production
-          label: staging,qa,prod
+          labels: staging,qa,prod
           
