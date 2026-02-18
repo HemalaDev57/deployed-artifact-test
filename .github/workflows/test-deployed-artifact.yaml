@@ -18,6 +18,8 @@ jobs:
       - name: register-build-artifact
         id: register_artifact
         uses: cloudbees-io-gha/register-build-artifact@v3
+        env:
+          CLOUDBEES_API_URL: "https://api.saas-preprod.beescloud.com"
         with:
           name: h-test-artifact
           url: "docker.io/hdevanan/h-test-artifact:latest"
