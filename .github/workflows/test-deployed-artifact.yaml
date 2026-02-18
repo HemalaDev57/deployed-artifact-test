@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: compile
+      - name: compile and build
         run: | 
           echo "Compiling"
           sleep 120
