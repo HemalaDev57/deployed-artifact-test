@@ -11,12 +11,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Checkout private repository
-        uses: actions/checkout@v4
-        with:
-          repository: HemalaDev57/register-deployed-artifact-test
-          token: ${{ secrets.PAT_TOKEN }}
-          path: private-repo
       - name: compile and build
         run: | 
           echo "Compiling"
