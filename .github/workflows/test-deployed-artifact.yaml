@@ -37,7 +37,7 @@ jobs:
         run: |
           echo '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
       - name: register-deployed-artifact
-        uses: HemalaDev57/register-deployed-artifact-test@master
+        uses: ./private-repo
         env:
           CLOUDBEES_API_URL: "https://api.saas-preprod.beescloud.com"
         with: 
