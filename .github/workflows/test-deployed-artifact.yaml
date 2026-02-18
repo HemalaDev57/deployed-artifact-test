@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          repository: HemalaDev57/register-deployed-artifact-test
+          token: ${{ secrets.PAT_TOKEN }}
+          path: private-repo
       - name: compile and build
         run: | 
           echo "Compiling"
@@ -32,6 +36,8 @@ jobs:
           echo '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
       - name: register-deployed-artifact
         uses: HemalaDev57/register-deployed-artifact-test@master
+        env:
+          CLOUDBEES_API_URL: "https://api.saas-preprod.beescloud.com"
         with: 
           artifact_id: '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
           target_environment: Production
