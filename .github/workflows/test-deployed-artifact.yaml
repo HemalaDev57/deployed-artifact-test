@@ -1,28 +1,33 @@
-name: GHA Build and Deployed Artifact Test Workflow
+name: GHA build and deployed artifact test workflow
 
 on:
   workflow_dispatch:
-
 permissions:
-  id-token: write
-  contents: read
-
+    id-token: write
+    contents: read
 jobs:
   publish-artifact:
     runs-on: ubuntu-latest
     steps:
-      # Checkout main repo
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      # Compile/build step 
-      - name: Compile and build
-        run: |
-          echo "Compiling..."
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: HemalaDev57/register-deployed-artifact-test
+          token: ${{ secrets.PAT_TOKEN }}
+          path: private-repo
+      - name: compile and build
+        run: | 
+          echo "Compiling"
           sleep 5
-
-      # Register build artifact
-      - name: Register build artifact
+      - name: register-build-artifact
         id: register_artifact
         uses: cloudbees-io-gha/register-build-artifact@v3
         env:
@@ -32,19 +37,16 @@ jobs:
           url: "docker.io/hdevanan/h-test-artifact:latest"
           version: 1.0.0
           label: staging,qa,prod
-          type: docker
+          type: "docker"
           digest: "sha256:1234567890abcdef123456123456abcdefabcdef123456"
-
-      # Print artifact id
-      - name: Print artifact ID
+      - name: Print artifact id
         run: |
-          echo "Artifact ID: ${{ steps.register_artifact.outputs.cbp_artifact_id }}"
-
-      # Call your private action locally
-      - name: Register deployed artifact
-        uses: ./private-repo  
-        with:
+          echo '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
+      - name: register-deployed-artifact
+        uses: ./private-repo
+        with: 
           cloudbees-url: "https://api.saas-preprod.beescloud.com"
           artifact-id: '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
           target-environment: Production
           labels: staging,qa,prod
+          
