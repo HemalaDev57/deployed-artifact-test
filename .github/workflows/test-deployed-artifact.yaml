@@ -11,12 +11,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Login to GHCR
-        uses: docker/login-action@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.PAT_TOKEN }}
+          repository: HemalaDev57/register-deployed-artifact-test
+          token: ${{ secrets.PAT_TOKEN }}
+          path: private-repo
       - name: compile and build
         run: | 
           echo "Compiling"
@@ -37,7 +37,7 @@ jobs:
         run: |
           echo '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
       - name: register-deployed-artifact
-        uses: HemalaDev57/register-deployed-artifact-test@master
+        uses: ./private-repo
         with: 
           artifact_id: '${{ steps.register_artifact.outputs.cbp_artifact_id }}'
           target_environment: Production
